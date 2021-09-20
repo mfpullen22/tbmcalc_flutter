@@ -41,15 +41,15 @@ class _CalcFormState extends State<CalcForm> {
       value: selectedDiff,
       items: <DropdownMenuItem<int>>[
         DropdownMenuItem(
-          child: Text("No predominant cell type"),
+          child: Text("No predominant cell type", style: TextStyle(fontSize: 14)),
           value: 0,
         ),
         DropdownMenuItem(
-          child: Text("Neutrophilic"),
+          child: Text("Neutrophilic", style: TextStyle(fontSize: 14)),
           value: 1,
         ),
         DropdownMenuItem(
-          child: Text("Lymphocytic"),
+          child: Text("Lymphocytic", style: TextStyle(fontSize: 14)),
           value: 2,
         ),
       ],
@@ -137,8 +137,13 @@ class _CalcFormState extends State<CalcForm> {
         patientData["hiv"] +
         (-0.6318415877));
 
-    prob = (odds / (1 - odds) * 100).floor();
+    print(odds);
     print(prob);
+
+    setState(() {
+      prob = ((odds / (1 + odds)) * 100).floor();
+    });
+
   }
 
   @override
@@ -165,7 +170,8 @@ class _CalcFormState extends State<CalcForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("CSF Differential: ", style: TextStyle(fontSize: 16)),
-              Platform.isIOS ? iOSPicker() : androidDropdown(),
+              //Platform.isIOS ? Expanded(child: iOSPicker()) : Expanded(child: androidDropdown()),
+              Container(width: 200, child: androidDropdown()),
             ],
           ),
           Row(
